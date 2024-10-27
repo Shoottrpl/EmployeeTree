@@ -1,0 +1,36 @@
+{% extends 'app/base.html'%}
+
+{% block title%}  {% endblock %}
+{% load mptt_tags %}
+
+{% block content %}
+    <form action="{% url 'app:employees' %}" method="GET">
+        {% csrf_token %}
+        <label>Сортировать по:</label>
+        <select name="sort">
+          <option value="full_name">ФИО</option>
+          <option value="position">Должности</option>
+          <option value="employment">Дате трудоустройства</option>
+          <option value="salary">Зарплате</option>
+        </select>
+    </form>
+    <div>
+        <ul>
+            {% recursetree employees %}
+                <li>
+                    <strong>ФИО: {{node.full_name}}</strong>
+                    <ul>
+                        <li>Должность: {{node.position.name}}</li>
+                        <li>Дата трудоустройства: {{node.employment}}</li>
+                        <li>Зарплата: {{node.salary|floatformat:2}} rub</li>
+                    </ul>
+                    {% if not node.is_leaf_node %}
+                    <ul class="children">
+                        {{ children }}
+                    </ul>
+                    {% endif %}
+                </li>
+            {% endrecursetree %}
+        </ul>
+    </div>
+{% endblock %}
