@@ -21,7 +21,7 @@ class Position(models.Model):
 
 class Employee(MPTTModel):
     full_name = models.CharField(max_length=255)
-    position = models.ForeignKey("Position", related_name="employee", on_delete=models.CASCADE)
+    position = models.ForeignKey(Position, related_name="employee", on_delete=models.CASCADE)
     employment = models.DateTimeField()
     salary = models.FloatField()
     parent = TreeForeignKey(

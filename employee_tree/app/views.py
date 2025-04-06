@@ -1,7 +1,3 @@
-from lib2to3.fixes.fix_input import context
-
-from django.shortcuts import render
-from django.template.context_processors import request
 from django.views.generic.list import ListView
 
 from .models import Employee, Position
@@ -15,10 +11,16 @@ class IndexView(ListView):
 
 class EmployeesView(IndexView):
     template_name = 'app/employees.html'
-    def get_ordering(self):
-        # ordering = self.request.GET.get('salary')
-        ordering = 'full_name'
-        print(ordering)
-        return ordering
+
+    def get_queryset(self):
+        queryset =  super().get_queryset().values('full_name', 'employment', 'position__name', 'salary')
+        self.request.session['sort'] = self.request.GET['sort']
+        order = self.request.session['sort']
+
+        if order:
+             queryset = queryset.order_by(order)
+
+        return queryset
+
 
 

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     #extra app
     'adminsortable2',
     'mptt',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

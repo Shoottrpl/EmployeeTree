@@ -172,3 +172,11 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+<<<<<<< HEAD
+=======
+
+.idea/
+*.iml
+*.ipr
+*.iws
+>>>>>>> 418dee0 (Remove unused files)
